@@ -1,0 +1,79 @@
+max.forbidden.votecount: 4f #被投票几次后禁言
+max.forbidden.day: 2 #被投票禁言天数
+server:
+  port: 9990
+spring:
+  datasource:
+#    driverClass: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat,wall
+    maxActive: 50
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 5
+    timeBetweenEvictionRunsMillis: 30000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: update #validate 表结构稳定 后使用
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  #配置环境
+  profiles:
+    active: dev
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/cAuth?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8
+    username: jinlailiao
+    password: jinlailiao
+#  redis:
+#    database: 0      # Redis数据库索引（默认为0）
+#    host: localhost  # Redis服务器地址
+#    port: 6379       # Redis服务器连接端口
+#    password:        # Redis服务器连接密码（默认为空）
+#    jedis:
+#      pool:
+#      max-active: 8  #池在给定时间可以分配的最大连接数。使用负值无限制。
+#      max-idle: 8    #池中“空闲”连接的最大数量。使用负值表示无限数量的空闲连接。
+#      max-wait:      # 连接分配在池被耗尽时抛出异常之前应该阻塞的最长时间量（以毫秒为单位）。使用负值可以无限期地阻止。
+#      min-idle: 0    # 目标为保持在池中的最小空闲连接数。这个设置只有在正面的情况下才有效果。
+
+
+weapp:
+  serverHost: ourmemory.online
+  authServerUrl: http://ourmemory.online:9900
+  tunnelServerUrl: https://ws.qcloud.com
+  tunnelSignatureKey: localhost
+  networkTimeout: 30000
+
+location:
+  raidus: 1000 #半径范围，单位米
+
+---
+spring:
+  profiles: product
+  datasource:
+    url: jdbc:mysql://localhost:3306/cAuth?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8
+    username: root
+    password: wx9254d8d8593a1c6a
+
+weapp:
+  serverHost: ourmemory.online
+  authServerUrl: http://123.207.172.157:9900/mina_auth/
+  tunnelServerUrl: https://ws.qcloud.com
+  tunnelSignatureKey: localhost
+  networkTimeout: 30000
+
+location:
+  raidus: 500000 #半径范围，单位米
